@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dharohar — Where Culture Lives</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #981B25; --accent: #FE9A00; --bg: #F8F5F1;
+      --text: #1a1a1a; --text-light: #555; --white: #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(248,245,241,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(152,27,37,0.08); }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; }
+    .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: var(--primary); }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-links a.active { border-bottom: 2px solid var(--primary); padding-bottom: 2px; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 500; }
+    .lang-toggle span { cursor: pointer; padding: 2px 6px; border-radius: 4px; }
+    .lang-toggle span.active { background: var(--primary); color: white; }
+    .btn-signin { display: flex; align-items: center; gap: 6px; background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; }
+
+    .hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1548013146-72479768bada?w=1800&q=85'); background-size: cover; background-position: center; filter: brightness(0.55); }
+    .hero-content { position: relative; z-index: 2; padding: 0 80px; margin-top: 64px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 8px 20px; border-radius: 999px; margin-bottom: 32px; }
+    .hero-badge::before { content: '✦'; color: var(--accent); }
+    .hero-title { font-family: 'Playfair Display', serif; color: white; line-height: 1.05; }
+    .hero-title .line-normal { font-size: clamp(56px, 8vw, 110px); font-weight: 700; display: block; }
+    .hero-title .line-italic { font-size: clamp(60px, 9vw, 120px); font-weight: 600; font-style: italic; color: var(--accent); display: block; }
+    .hero-subtitle { font-size: clamp(15px, 1.5vw, 18px); color: rgba(255,255,255,0.8); max-width: 520px; margin: 28px 0 40px; line-height: 1.7; }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { background: var(--accent); color: #000; padding: 14px 32px; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; box-shadow: 0 8px 24px rgba(254,154,0,0.35); }
+    .btn-secondary { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.6); padding: 14px 32px; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 500; text-decoration: none; cursor: pointer; }
+    .hero-scroll { position: absolute; bottom: 40px; left: 80px; color: rgba(255,255,255,0.6); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+    .hero-scroll::after { content: ''; display: block; width: 40px; height: 1px; background: rgba(255,255,255,0.4); }
+
+    .stats-bar { background: white; padding: 32px 80px; display: flex; justify-content: center; gap: 80px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .stat-item { display: flex; align-items: center; gap: 14px; }
+    .stat-icon { font-size: 26px; }
+    .stat-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--primary); line-height: 1; }
+    .stat-label { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+
+    section { padding: 100px 80px; }
+    .section-header { margin-bottom: 60px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 700; color: var(--primary); margin-bottom: 16px; }
+    .section-subtitle { font-size: 16px; color: var(--text-light); max-width: 560px; }
+    .section-link { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 600; font-size: 14px; text-decoration: none; margin-top: 16px; }
+    .section-link::after { content: '→'; }
+
+    .heritage-section { background: var(--bg); }
+    .states-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+    .state-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.3s, box-shadow 0.3s; }
+    .state-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+    .state-card-img { width: 100%; height: 220px; object-fit: cover; display: block; }
+    .state-card-body { padding: 24px; }
+    .state-capital { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .state-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+    .state-desc { font-size: 14px; color: var(--text-light); line-height: 1.6; margin-bottom: 16px; }
+    .state-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .state-tag { background: var(--bg); color: var(--primary); font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(152,27,37,0.15); }
+
+    .bazaar-section { background: white; }
+    .artisans-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+    .artisan-card { background: var(--bg); border-radius: 12px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+    .artisan-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .artisan-img-wrap { position: relative; }
+    .artisan-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .artisan-price { position: absolute; top: 12px; right: 12px; background: white; color: var(--primary); font-weight: 700; font-size: 14px; padding: 4px 12px; border-radius: 999px; }
+    .artisan-body { padding: 16px; }
+    .artisan-craft { font-size: 12px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .artisan-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .artisan-state { font-size: 13px; color: var(--text-light); margin-bottom: 14px; }
+    .btn-view { display: inline-block; background: var(--primary); color: white; font-size: 13px; font-weight: 500; padding: 8px 20px; border-radius: 999px; text-decoration: none; }
+    .bazaar-cta { text-align: center; margin-top: 48px; }
+
+    .utsav-section { background: var(--bg); }
+    .festivals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .festival-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: transform 0.3s; }
+    .festival-card:hover { transform: translateY(-6px); }
+    .festival-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .festival-body { padding: 20px; }
+    .festival-month { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; }
+    .festival-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .festival-desc { font-size: 13px; color: var(--text-light); line-height: 1.6; margin-bottom: 12px; }
+    .festival-location { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-light); background: var(--bg); padding: 4px 10px; border-radius: 999px; }
+    .festival-location::before { content: '📍'; font-size: 11px; }
+
+    footer { background: var(--primary); color: white; padding: 60px 80px 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: white; margin-bottom: 12px; }
+    .footer-brand-desc { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.7; max-width: 280px; }
+    .footer-col-title { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.5); }
+
+    @media (max-width: 1100px) { .artisans-grid { grid-template-columns: repeat(2,1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 900px) { nav { padding: 0 24px; } .nav-links { display: none; } section { padding: 64px 24px; } .hero-content { padding: 0 24px; } .hero-scroll { left: 24px; } .stats-bar { padding: 24px; gap: 32px; flex-wrap: wrap; } .states-grid { grid-template-columns: 1fr; } .festivals-grid { grid-template-columns: 1fr; } .artisans-grid { grid-template-columns: 1fr 1fr; } footer { padding: 48px 24px 24px; } .footer-grid { grid-template-columns: 1fr; gap: 32px; } .footer-bottom { flex-direction: column; gap: 8px; text-align: center; } }
+    @media (max-width: 560px) { .artisans-grid { grid-template-columns: 1fr; } .hero-buttons { flex-direction: column; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">D</div>
+      <span class="nav-logo-text">Dharohar</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#states">Explore States</a></li>
+      <li><a href="#">Monuments</a></li>
+      <li><a href="#bazaar">Art Forms</a></li>
+      <li><a href="#bazaar">Sanskrit Bazaar</a></li>
+      <li><a href="#">Samaj</a></li>
+      <li><a href="#utsav">Utsav Calendar</a></li>
+      <li><a href="#">Sell Work</a></li>
+      <li><a href="#">Learn</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <span class="active">EN</span>
+        <span>HI</span>
+      </div>
+      <a href="#" class="btn-signin">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Sign In
+      </a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Discover the Soul of India</div>
+      <h1 class="hero-title">
+        <span class="line-normal">Where</span>
+        <span class="line-italic">Culture</span>
+        <span class="line-normal">Lives</span>
+      </h1>
+      <p class="hero-subtitle">Journey through the timeless heritage, vibrant festivals, and exquisite craftsmanship of an ancient civilization.</p>
+      <div class="hero-buttons">
+        <a href="#states" class="btn-primary">Begin Exploration</a>
+        <a href="#" class="btn-secondary">Join Samaj</a>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-icon">📍</div><div><div class="stat-value">28+</div><div class="stat-label">States &amp; UTs</div></div></div>
+    <div class="stat-item"><div class="stat-icon">🎨</div><div><div class="stat-value">200+</div><div class="stat-label">Art Forms</div></div></div>
+    <div class="stat-item"><div class="stat-icon">🏛️</div><div><div class="stat-value">500+</div><div class="stat-label">Monuments</div></div></div>
+    <div class="stat-item"><div class="stat-icon">👨‍🎨</div><div><div class="stat-value">10k+</div><div class="stat-label">Artisans</div></div></div>
+  </div>
+
+  <section id="states" class="heritage-section">
+    <div class="section-header">
+      <h2 class="section-title">Discover Heritage</h2>
+      <p class="section-subtitle">Explore the iconic states and monuments that tell the story of India's rich history.</p>
+      <a href="#" class="section-link">View All States</a>
+    </div>
+    <div class="states-grid">
+      <div class="state-card">
+        <img class="state-card-img" src="https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80" alt="Rajasthan"/>
+        <div class="state-card-body">
+          <div class="state-capital">Capital: Jaipur</div>
+          <div class="state-name">Rajasthan</div>
+          <p class="state-desc">The Land of Kings, famous for its majestic forts, palaces, and vibrant desert culture.</p>
+          <div class="state-tags"><span class="state-tag">Hawa Mahal</span><span class="state-tag">Thar Desert</span><span class="state-tag">Pushkar Mela</span></div>
+        </div>
+      </div>
+      <div class="state-card">
+        <img class="state-card-img" src="https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80" alt="Uttar Pradesh"/>
+        <div class="state-card-body">
+          <div class="state-capital">Capital: Lucknow</div>
+          <div class="state-name">Uttar Pradesh</div>
+          <p class="state-desc">The cultural heartland of India, home to the Taj Mahal, holy Varanasi, and the birthplace of Ram and Krishna.</p>
+          <div class="state-tags"><span class="state-tag">Taj Mahal</span><span class="state-tag">Varanasi</span><span class="state-tag">Mathura</span></div>
+        </div>
+      </div>
+      <div class="state-card">
+        <img class="state-card-img" src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" alt="Kerala"/>
+        <div class="state-card-body">
+          <div class="state-capital">Capital: Thiruvananthapuram</div>
+          <div class="state-name">Kerala</div>
+          <p class="state-desc">God's Own Country — backwaters, ancient Ayurveda, Kathakali dance and lush hill stations.</p>
+          <div class="state-tags"><span class="state-tag">Backwaters</span><span class="state-tag">Kathakali</span><span class="state-tag">Ayurveda</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bazaar" class="bazaar-section">
+    <div class="section-header">
+      <h2 class="section-title">Sanskrit Bazaar</h2>
+      <p class="section-subtitle">Support the custodians of our culture. Meet authentic artisans and discover their masterpieces.</p>
+    </div>
+    <div class="artisans-grid">
+      <div class="artisan-card"><div class="artisan-img-wrap"><img class="artisan-img" src="https://images.unsplash.com/photo-1567690199638-0f2c31af6be4?w=600&q=80" alt="Madhubani"/><span class="artisan-price">₹2,500</span></div><div class="artisan-body"><div class="artisan-craft">Madhubani Painting</div><div class="artisan-name">Ramesh Jha</div><div class="artisan-state">Bihar</div><a href="#" class="btn-view">View Works</a></div></div>
+      <div class="artisan-card"><div class="artisan-img-wrap"><img class="artisan-img" src="https://images.unsplash.com/photo-1518497490745-9a0f6ca4a89f?w=600&q=80" alt="Blue Pottery"/><span class="artisan-price">₹1,800</span></div><div class="artisan-body"><div class="artisan-craft">Blue Pottery</div><div class="artisan-name">Fatima Bi</div><div class="artisan-state">Rajasthan</div><a href="#" class="btn-view">View Works</a></div></div>
+      <div class="artisan-card"><div class="artisan-img-wrap"><img class="artisan-img" src="https://images.unsplash.com/photo-1601050690116-f39d85c98bf8?w=600&q=80" alt="Pattachitra"/><span class="artisan-price">₹3,500</span></div><div class="artisan-body"><div class="artisan-craft">Pattachitra Painting</div><div class="artisan-name">Gopal Das</div><div class="artisan-state">Odisha</div><a href="#" class="btn-view">View Works</a></div></div>
+      <div class="artisan-card"><div class="artisan-img-wrap"><img class="artisan-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Warli"/><span class="artisan-price">₹1,500</span></div><div class="artisan-body"><div class="artisan-craft">Warli Painting</div><div class="artisan-name">Sunita Bai</div><div class="artisan-state">Maharashtra</div><a href="#" class="btn-view">View Works</a></div></div>
+    </div>
+    <div class="bazaar-cta"><a href="#" class="btn-primary">Explore Marketplace</a></div>
+  </section>
+
+  <section id="utsav" class="utsav-section">
+    <div class="section-header">
+      <h2 class="section-title">Utsav Calendar</h2>
+      <p class="section-subtitle">Experience the joy and devotion of India's most celebrated festivals.</p>
+    </div>
+    <div class="festivals-grid">
+      <div class="festival-card"><img class="festival-img" src="https://images.unsplash.com/photo-1601050690116-f39d85c98bf8?w=800&q=80" alt="Diwali"/><div class="festival-body"><div class="festival-month">अक्टूबर–नवंबर</div><div class="festival-name">Diwali</div><p class="festival-desc">The Festival of Lights — diyas, fireworks, Lakshmi puja and sweets. Marks Ram's return to Ayodhya.</p><span class="festival-location">India Wide</span></div></div>
+      <div class="festival-card"><img class="festival-img" src="https://images.unsplash.com/photo-1576514249396-e3c1c11bef0e?w=800&q=80" alt="Holi"/><div class="festival-body"><div class="festival-month">मार्च</div><div class="festival-name">Holi</div><p class="festival-desc">Festival of Colors — celebrating spring and the triumph of devotion over evil at Vrindavan.</p><span class="festival-location">India Wide</span></div></div>
+      <div class="festival-card"><img class="festival-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80" alt="Navratri"/><div class="festival-body"><div class="festival-month">अक्टूबर</div><div class="festival-name">Navratri</div><p class="festival-desc">Nine nights of Garba dance and devotion to Goddess Durga — celebrated with pandals and dance.</p><span class="festival-location">India Wide</span></div></div>
+      <div class="festival-card"><img class="festival-img" src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=800&q=80" alt="Buddha Purnima"/><div class="festival-body"><div class="festival-month">मई</div><div class="festival-name">Buddha Purnima</div><p class="festival-desc">Celebrates Buddha's birth, enlightenment at Bodh Gaya, and passing — all on the same full moon.</p><span class="festival-location">India Wide</span></div></div>
+      <div class="festival-card"><img class="festival-img" src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" alt="Onam"/><div class="festival-body"><div class="festival-month">अगस्त–सितंबर</div><div class="festival-name">Onam</div><p class="festival-desc">Kerala's harvest festival welcoming King Mahabali — Pookalam, Sadya feast and Vallam Kali boat races.</p><span class="festival-location">India Wide</span></div></div>
+      <div class="festival-card"><img class="festival-img" src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=80" alt="Guru Nanak Jayanti"/><div class="festival-body"><div class="festival-month">नवंबर</div><div class="festival-name">Guru Nanak Jayanti</div><p class="festival-desc">Celebrates the birth of Guru Nanak Dev Ji (1469), founder of Sikhism — Golden Temple illuminated.</p><span class="festival-location">India Wide</span></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Dharohar</div>
+        <p class="footer-brand-desc">Where Culture Lives — a digital platform preserving and celebrating the timeless heritage, art, and traditions of India.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Explore</div>
+        <ul class="footer-links"><li><a href="#">States &amp; UTs</a></li><li><a href="#">Monuments</a></li><li><a href="#">Art Forms</a></li><li><a href="#">Utsav Calendar</a></li></ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Community</div>
+        <ul class="footer-links"><li><a href="#">Samaj</a></li><li><a href="#">Sanskrit Bazaar</a></li><li><a href="#">Sell Your Work</a></li><li><a href="#">Learn</a></li></ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links"><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Dharohar. All rights reserved.</span>
+      <span>Made with ♥ in India</span>
+    </div>
+  </footer>
+
+</body>
+</html>
